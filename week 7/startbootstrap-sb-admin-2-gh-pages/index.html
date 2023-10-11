@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!-- saved from url=(0120)file:///C:/Users/felis/Downloads/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/smartfarming.html -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>SB Admin 2 - Cards</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="./css/sb-admin-2.css" rel="stylesheet" type="text/css" />
+    <link href="./css/sb-admin-2.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template-->
+    <link href="./css/sb-admin-2.css" rel="stylesheet" />
+    <script
+      src="https://kit.fontawesome.com/2162fe8fc6.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body id="page-top" class="sidebar-toggled">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between m-4"
+            ></div>
+
+            <div class="row">
+              <div class="col-lg mb-4">
+                <div class="card shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="m-4">
+                      <form id="searchForm">
+                        <div class="form-group">
+                          <label for="searchTerm"
+                            >Enter ID or Movie Name:</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="searchTerm"
+                            required
+                          />
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                          Search
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg mb-4">
+                <div class="card shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="h1 mb-0 font-weight-bold text-dark">
+                          <div id="filmTitle"></div>
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-info">
+                          <div id="filmGenre"></div>
+                        </div>
+                        <div class="text-s font-weight-bold">
+                          <div id="filmSynopsis"></div>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <div id="poster"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright © Cards 2023</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <a
+      class="scroll-to-top rounded"
+      href="file:///C:/Users/felis/Downloads/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/smartfarming.html#page-top"
+    >
+      <i class="fas fa-angle-up"></i>
+    </a>
+  </body>
+  <script>
+    const APIkey = "5f077236";
+    const apiUrl = `http://www.omdbapi.com/?plot=full&apikey=${APIkey}&`;
+
+    const filmTitle = document.getElementById("filmTitle");
+    const filmSynopsis = document.getElementById("filmSynopsis");
+    const filmGenre = document.getElementById("filmGenre");
+    const filmPoster = document.getElementById("poster");
+    const searchForm = document.getElementById("searchForm");
+
+    // Function to update film data
+    function showFilm(data) {
+      filmTitle.textContent = `${data.Title}`;
+      filmSynopsis.textContent = `${data.Plot}`;
+      filmGenre.textContent = `${data.Genre}`;
+      filmPoster.innerHTML = `<img src="${data.Poster}" alt="Film Poster">`;
+    }
+
+    // Function to handle form submission
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const searchTerm = document.getElementById("searchTerm").value;
+
+      const apiUrlWithSearchTerm = isNaN(searchTerm)
+        ? `${apiUrl}t=${searchTerm}`
+        : `${apiUrl}i=${searchTerm}`;
+
+      fetch(apiUrlWithSearchTerm)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then(showFilm)
+        .catch(handleErrors);
+    }
+
+    function handleErrors(error) {
+      console.error("Error:", error);
+    }
+
+    searchForm.addEventListener("submit", handleFormSubmit);
+  </script>
+</html>

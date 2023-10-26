@@ -13,7 +13,7 @@
     <meta name="author" content="" />
 
     <title>SB Admin 2 - Cards</title>
-
+    <footer></footer>
     <!-- Custom fonts for this template-->
     <link href="./css/sb-admin-2.css" rel="stylesheet" type="text/css" />
     <link href="./css/sb-admin-2.css" rel="stylesheet" />
@@ -52,6 +52,7 @@
                         <div
                           class="text-s font-weight-bold text-uppercase mb-1"
                         >
+                          <button class="close"></button>
                           <div id="temperature"></div>
                         </div>
                       </div>
@@ -435,7 +436,7 @@
     </a>
   </body>
   <script>
-    const APIkey = "key";
+    const APIkey = "431f6b2a2d643351f6a39c835ac80ee5";
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=surabaya&appid=${APIkey}&units=metric`;
 
     const weatherElement = document.getElementById("weather");
@@ -446,7 +447,7 @@
     function updateWeather(data) {
       locationElement.textContent = `${data.name}, ${data.sys.country}`;
       temperatureElement.textContent = `${data.main.temp}°C`;
-      weatherElement.textContent = `${data.weather[0].main}`;
+      weatherElement.textContent = `${data.weather[0].description}`;
     }
 
     // AJAX request
